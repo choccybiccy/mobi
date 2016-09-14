@@ -8,7 +8,7 @@ create my own to give back to the community.
 
 ## Installation
 ```
-$ composer require choccybiccy/mobi
+composer require choccybiccy/mobi
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ $mobi = new Mobi\Reader('MyBook.mobi');
 
 ## Testing
 ```
-$ ./vendor/bin/phpunit
+./vendor/bin/phpunit
 ```
 
 ## Thanks
