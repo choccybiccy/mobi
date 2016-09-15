@@ -15,12 +15,12 @@
     "minimum-stability": "stable",
     "require": {},
     "autoload": {
-        "psr4": {
+        "psr-4": {
             "Choccybiccy\\Mobi\\": "src/"
         }
     },
     "autoload-dev": {
-        "psr4": {
+        "psr-4": {
             "Choccybiccy\\Mobi\\": "tests/"
         }
     }
