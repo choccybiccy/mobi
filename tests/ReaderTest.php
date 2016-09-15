@@ -18,7 +18,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMobiPath()
     {
-        return realpath(__DIR__ . '/../resources/The_Adventures_of_Sherlock_Holmes_by_Doyle.mobi');
+        return realpath(__DIR__ . '/../resources/test.mobi');
     }
 
     /**

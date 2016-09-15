@@ -5,7 +5,7 @@ namespace Choccybiccy\Mobi\Header\Record;
 /**
  * Class PalmRecord.
  */
-class PalmRecord
+class PalmRecord implements RecordInterface
 {
     /**
      * @var int
