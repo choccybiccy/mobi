@@ -10,7 +10,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     public function testConstruct()
     {
         $mobi = new Reader(new \SplFileObject($this->getMobiPath()));
-        var_dump($mobi);die();
+        $this->assertInstanceOf(Reader::class, $mobi);
     }
 
     /**
