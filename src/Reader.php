@@ -79,7 +79,7 @@ class Reader
     public function getTitle()
     {
         try {
-            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_UPDATEDTITLE);
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_UPDATED_TITLE);
         } catch (\Exception $e) {
             return $this->title;
         }
