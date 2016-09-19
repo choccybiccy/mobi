@@ -8,11 +8,15 @@ namespace Choccybiccy\Mobi\Header;
 class PalmDocHeader
 {
     const COMPRESSION_NONE = 1;
+
     const COMPRESSION_PALMDOC = 2;
+
     const COMPRESSION_HUFFCDIC = 17480;
 
     const ENCRYPTION_NONE = 0;
+
     const ENCRYPTION_OLD_MOBIPOCKER = 1;
+
     const ENCRYPTION_MOBIPOCKET = 2;
 
     /**
