@@ -14,7 +14,29 @@ composer require choccybiccy/mobi
 ## Usage
 ### Reading .mobi files
 ```
-$mobi = new Mobi\Reader('MyBook.mobi');
+use Choccybiccy;
+
+$mobi = new Mobi\Reader('sherlock.mobi');
+
+echo $mobi->getTitle(); # The Adventures of Sherlock Holmes by Doyle
+echo $mobi->getAuthor(); # Doyle, Arthur Conan, Sir, 1859-1930
+```
+#### .mobi headers
+```
+use Choccybiccy;
+
+$mobi = new Mobi\Reader('sherlock.mobi');
+
+$palmDb = $mobi->getPalmDbHeader();
+$palmDoc = $mobi->getPalmDocHeader();
+$mobi = $mobi->getMobiHeader();
+$exth = $mobi->getExthHeader();
+```
+
+#### EXTH records
+```
+echo $exth->getRecordByType(Mobi\Header\ExthHeader::TYPE_AUTHOR); # Doyle, Arthur Conan, Sir, 1859-1930
+echo $exth->getRecordByType(Mobi\Header\ExthHeader::TYPE_PUBLISHER); # Mobipocket (an Amazon.com company)
 ```
 
 ## Testing

@@ -13,7 +13,7 @@ use Choccybiccy\Mobi\Header\Record\ExthRecord;
 class ExthHeader extends AbstractRecordHeader
 {
     const TYPE_AUTHOR = 100;
-    const TYPE_PUBLISHER = 102;
+    const TYPE_PUBLISHER = 101;
     const TYPE_CONTRIBUTOR = 108;
     const TYPE_UPDATEDTITLE = 503;
 
