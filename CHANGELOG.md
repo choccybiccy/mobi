@@ -3,6 +3,9 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Updated
+- myclabs/deep-copy updated from 1.5.3 to 1.5.4
+- `composer.json` now contains minimum PHP version
 
 ## 0.1.1 - 2016-09-19
 ### Added
