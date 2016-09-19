@@ -101,7 +101,8 @@ class ExthHeader extends AbstractRecordHeader
 
     /**
      * ExthHeader constructor.
-     * @param int $length
+     *
+     * @param int   $length
      * @param array $records
      */
     public function __construct($length, array $records = [])
@@ -133,6 +134,6 @@ class ExthHeader extends AbstractRecordHeader
                 return $record->getData();
             }
         }
-        throw new NoSuchRecordException('No such EXTH record matching type ' . $type . ' found');
+        throw new NoSuchRecordException('No such EXTH record matching type '.$type.' found');
     }
 }

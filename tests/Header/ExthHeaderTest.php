@@ -10,7 +10,7 @@ use Choccybiccy\Mobi\TestCase;
 class ExthHeaderTest extends TestCase
 {
     /**
-     * Test getters
+     * Test getters.
      */
     public function testGetters()
     {
@@ -19,13 +19,13 @@ class ExthHeaderTest extends TestCase
         ];
         $header = new ExthHeader($getters['length']);
         foreach ($getters as $method => $value) {
-            $method = 'get' . ucfirst($method);
+            $method = 'get'.ucfirst($method);
             self::assertEquals($value, $header->{$method}());
         }
     }
 
     /**
-     * Test getRecordByType
+     * Test getRecordByType.
      */
     public function testGetRecordByType()
     {
@@ -35,7 +35,7 @@ class ExthHeaderTest extends TestCase
     }
 
     /**
-     * Test getRecordByType throws exception if record doesn't exist
+     * Test getRecordByType throws exception if record doesn't exist.
      *
      * @expectedException \Choccybiccy\Mobi\Exception\NoSuchRecordException
      */

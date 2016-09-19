@@ -16,6 +16,7 @@ abstract class AbstractRecordHeader implements \IteratorAggregate
 
     /**
      * AbstractRecordHeader constructor.
+     *
      * @param array $records
      */
     public function __construct(array $records = [])
@@ -39,6 +40,7 @@ abstract class AbstractRecordHeader implements \IteratorAggregate
     public function addRecord(RecordInterface $record)
     {
         $this->records[] = $record;
+
         return $this;
     }
 }

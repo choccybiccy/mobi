@@ -64,6 +64,7 @@ class MobiHeader
 
     /**
      * MobiHeader constructor.
+     *
      * @param int $length
      * @param int $type
      * @param int $encoding

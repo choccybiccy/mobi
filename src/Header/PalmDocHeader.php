@@ -46,6 +46,7 @@ class PalmDocHeader
 
     /**
      * PalmDoc constructor.
+     *
      * @param int $compression
      * @param int $textLength
      * @param int $recordCount
