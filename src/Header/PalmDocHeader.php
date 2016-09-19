@@ -11,6 +11,10 @@ class PalmDocHeader
     const COMPRESSION_PALMDOC = 2;
     const COMPRESSION_HUFFCDIC = 17480;
 
+    const ENCRYPTION_NONE = 0;
+    const ENCRYPTION_OLD_MOBIPOCKER = 1;
+    const ENCRYPTION_MOBIPOCKET = 2;
+
     /**
      * @var int
      */
@@ -32,18 +36,25 @@ class PalmDocHeader
     protected $recordSize;
 
     /**
+     * @var int
+     */
+    protected $encryption;
+
+    /**
      * PalmDoc constructor.
      * @param int $compression
      * @param int $textLength
      * @param int $recordCount
      * @param int $recordSize
+     * @param int $encryption
      */
-    public function __construct($compression, $textLength, $recordCount, $recordSize)
+    public function __construct($compression, $textLength, $recordCount, $recordSize, $encryption)
     {
         $this->compression = $compression;
         $this->textLength = $textLength;
         $this->recordCount = $recordCount;
         $this->recordSize = $recordSize;
+        $this->encryption = $encryption;
     }
 
     /**
@@ -76,5 +87,13 @@ class PalmDocHeader
     public function getRecordSize()
     {
         return $this->recordSize;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEncryption()
+    {
+        return $this->encryption;
     }
 }

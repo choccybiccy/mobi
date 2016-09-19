@@ -23,7 +23,7 @@ class Reader
     /**
      * @var string
      */
-    protected $name;
+    protected $title;
 
     /**
      * @var PalmDbHeader
@@ -67,10 +67,74 @@ class Reader
     public function __construct($file)
     {
         if (is_string($file)) {
-            $file = new \SplFileObject($file, "r");
+            $file = new \SplFileObject($file, "rb");
         }
         $this->file = $file;
         $this->parse();
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_UPDATEDTITLE);
+        } catch (\Exception $e) {
+            return $this->title;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthor()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_AUTHOR);
+        } catch (\Exception $e) {
+            return "(unknown)";
+        }
+    }
+
+    /**
+     * @return PalmDbHeader
+     */
+    public function getPalmDbHeader()
+    {
+        return $this->palmDbHeader;
+    }
+
+    /**
+     * @return PalmDocHeader
+     */
+    public function getPalmDocHeader()
+    {
+        return $this->palmDocHeader;
+    }
+
+    /**
+     * @return MobiHeader
+     */
+    public function getMobiHeader()
+    {
+        return $this->mobiHeader;
+    }
+
+    /**
+     * @return ExthHeader
+     */
+    public function getExthHeader()
+    {
+        return $this->exthHeader;
+    }
+
+    /**
+     * @return \SplFileObject
+     */
+    public function getFile()
+    {
+        return $this->file;
     }
 
     /**
@@ -78,16 +142,24 @@ class Reader
      */
     protected function parse()
     {
+        $this->checkFormat();
+        $this->parsePalmDb();
+        $this->parsePalmDoc();
+        $this->parseMobiHeader();
+        $this->parseExth();
+    }
+
+    /**
+     * @throws InvalidFormatException
+     */
+    protected function checkFormat()
+    {
         $file = $this->file;
         $file->fseek(60);
         $content = $file->fread(8);
         if ($content !== 'BOOKMOBI') {
             throw new InvalidFormatException('The file is not a valid mobi file');
         }
-        $this->parsePalmDb();
-        $this->parsePalmDoc();
-        $this->parseMobiHeader();
-        $this->parseExth();
     }
 
     /**
@@ -101,7 +173,6 @@ class Reader
         $records = hexdec(bin2hex($content));
 
         $this->palmDbHeader = new PalmDbHeader();
-        $file->fseek(78);
         for ($i=0; $i<$records; $i++) {
             $this->palmDbHeader->addRecord(new PalmRecord(
                 $this->readData($file, 4),
@@ -129,6 +200,7 @@ class Reader
             $this->readData($file, 2),
             $this->readData($file, 4, $offset+4),
             $this->readData($file, 2),
+            $this->readData($file, 2),
             $this->readData($file, 2)
         );
     }
@@ -142,7 +214,7 @@ class Reader
             return;
         }
         $file = $this->file;
-        $this->mobiHeaderStart = $file->ftell()+4;
+        $this->mobiHeaderStart = $file->ftell()+2;
         $file->fseek($this->mobiHeaderStart);
         if ($file->fread(4) === 'MOBI') {
             $this->mobiHeader = new MobiHeader(
@@ -153,6 +225,11 @@ class Reader
                 $this->readData($file, 4)
             );
         }
+        $file->fseek($this->mobiHeaderStart+68);
+        $data = $file->fread(8);
+        $title = unpack("N*", $data);
+        $file->fseek($this->mobiHeaderStart+($title[1]-16));
+        $this->title = $file->fread($title[2]);
     }
 
     /**
@@ -164,11 +241,14 @@ class Reader
             return;
         }
         $file = $this->file;
-        $file->fseek($this->mobiHeaderStart + $this->mobiHeader->getLength());
+        $file->fseek($this->mobiHeaderStart + $this->mobiHeader->getLength()+4);
         $this->exthHeader = new ExthHeader($this->readData($file, 4));
         $records = $this->readData($file, 4);
         for ($i=0; $i<$records; $i++) {
-            
+            $type = $this->readData($file, 4);
+            $length = $this->readData($file, 4);
+            $data = $length > 0 ? $file->fread($length - 8) : "";
+            $this->exthHeader->addRecord(new ExthRecord($type, $length, $data));
         }
     }
 
