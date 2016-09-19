@@ -45,7 +45,7 @@ echo $exth->getRecordByType(Mobi\Header\ExthHeader::TYPE_PUBLISHER); # Mobipocke
 ```
 
 ## Todo
-- [x] Parse .mobi failes
+- [x] Parse .mobi files
 - [ ] More tests
 - [ ] EXTH record type constants
 - [ ] Helper methods to get common attributes (title, author etc)
