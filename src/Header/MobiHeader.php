@@ -8,20 +8,33 @@ namespace Choccybiccy\Mobi\Header;
 class MobiHeader
 {
     const TYPE_MOBIPOCKET_BOOK = 2;
+
     const TYPE_PALMDOC_BOOK = 3;
+
     const TYPE_AUDIO = 4;
+
     const TYPE_MOBIPOCKER_KINDLEGEN = 232;
+
     const TYPE_KF8 = 248;
+
     const TYPE_NEWS = 257;
+
     const TYPE_NEWS_FEED = 258;
+
     const TYPE_PICS = 513;
+
     const TYPE_WORD = 514;
+
     const TYPE_XLS = 515;
+
     const TYPE_PPT = 516;
+
     const TYPE_TEXT = 517;
+
     const TYPE_HTML = 518;
 
     const ENCODING_CP1252 = 1252;
+
     const ENCODING_UTF8 = 65001;
 
     /**
@@ -51,6 +64,7 @@ class MobiHeader
 
     /**
      * MobiHeader constructor.
+     *
      * @param int $length
      * @param int $type
      * @param int $encoding

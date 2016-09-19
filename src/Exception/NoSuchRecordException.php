@@ -3,7 +3,7 @@
 namespace Choccybiccy\Mobi\Exception;
 
 /**
- * Class NoSuchRecordException
+ * Class NoSuchRecordException.
  */
 class NoSuchRecordException extends \Exception
 {

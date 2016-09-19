@@ -24,8 +24,9 @@ class ExthRecord implements RecordInterface
 
     /**
      * ExthRecord constructor.
-     * @param int $type
-     * @param int $length
+     *
+     * @param int   $type
+     * @param int   $length
      * @param mixed $data
      */
     public function __construct($type, $length, $data)

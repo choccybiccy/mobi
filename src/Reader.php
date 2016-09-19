@@ -62,12 +62,18 @@ class Reader
 
     /**
      * Reader constructor.
+     *
      * @param string|\SplFileObject $file
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct($file)
     {
         if (is_string($file)) {
-            $file = new \SplFileObject($file, "rb");
+            $file = new \SplFileObject($file, 'rb');
+        }
+        if (!($file instanceof \SplFileObject)) {
+            throw new \InvalidArgumentException('File should either be a string or instance of \SplFileObject');
         }
         $this->file = $file;
         $this->parse();
@@ -79,7 +85,7 @@ class Reader
     public function getTitle()
     {
         try {
-            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_UPDATEDTITLE);
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_UPDATED_TITLE);
         } catch (\Exception $e) {
             return $this->title;
         }
@@ -93,7 +99,55 @@ class Reader
         try {
             return $this->exthHeader->getRecordByType(ExthHeader::TYPE_AUTHOR);
         } catch (\Exception $e) {
-            return "(unknown)";
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublisher()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_PUBLISHER);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsbn()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_ISBN);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getContributor()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_CONTRIBUTOR);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAsin()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_ASIN);
+        } catch (\Exception $e) {
+            return null;
         }
     }
 
@@ -138,7 +192,7 @@ class Reader
     }
 
     /**
-     * Parse the file data
+     * Parse the file data.
      */
     protected function parse()
     {
@@ -173,7 +227,7 @@ class Reader
         $records = hexdec(bin2hex($content));
 
         $this->palmDbHeader = new PalmDbHeader();
-        for ($i=0; $i<$records; $i++) {
+        for ($i = 0; $i < $records; ++$i) {
             $this->palmDbHeader->addRecord(new PalmRecord(
                 $this->readData($file, 4),
                 $this->readData($file, 1),
@@ -198,7 +252,7 @@ class Reader
         $file->fseek($offset);
         $this->palmDocHeader = new PalmDocHeader(
             $this->readData($file, 2),
-            $this->readData($file, 4, $offset+4),
+            $this->readData($file, 4, $offset + 4),
             $this->readData($file, 2),
             $this->readData($file, 2),
             $this->readData($file, 2)
@@ -214,7 +268,7 @@ class Reader
             return;
         }
         $file = $this->file;
-        $this->mobiHeaderStart = $file->ftell()+2;
+        $this->mobiHeaderStart = $file->ftell() + 2;
         $file->fseek($this->mobiHeaderStart);
         if ($file->fread(4) === 'MOBI') {
             $this->mobiHeader = new MobiHeader(
@@ -225,10 +279,10 @@ class Reader
                 $this->readData($file, 4)
             );
         }
-        $file->fseek($this->mobiHeaderStart+68);
+        $file->fseek($this->mobiHeaderStart + 68);
         $data = $file->fread(8);
-        $title = unpack("N*", $data);
-        $file->fseek($this->mobiHeaderStart+($title[1]-16));
+        $title = unpack('N*', $data);
+        $file->fseek($this->mobiHeaderStart + ($title[1] - 16));
         $this->title = $file->fread($title[2]);
     }
 
@@ -241,21 +295,21 @@ class Reader
             return;
         }
         $file = $this->file;
-        $file->fseek($this->mobiHeaderStart + $this->mobiHeader->getLength()+4);
+        $file->fseek($this->mobiHeaderStart + $this->mobiHeader->getLength() + 4);
         $this->exthHeader = new ExthHeader($this->readData($file, 4));
         $records = $this->readData($file, 4);
-        for ($i=0; $i<$records; $i++) {
+        for ($i = 0; $i < $records; ++$i) {
             $type = $this->readData($file, 4);
             $length = $this->readData($file, 4);
-            $data = $length > 0 ? $file->fread($length - 8) : "";
+            $data = $length > 0 ? $file->fread($length - 8) : '';
             $this->exthHeader->addRecord(new ExthRecord($type, $length, $data));
         }
     }
 
     /**
      * @param \SplFileObject $file
-     * @param int $length
-     * @param int|null $seek
+     * @param int            $length
+     * @param int|null       $seek
      *
      * @return number
      */
@@ -264,11 +318,13 @@ class Reader
         if (is_int($seek)) {
             $file->fseek($seek);
         }
+
         return hexdec(bin2hex($file->fread($length)));
     }
 
     /**
      * @param \SplFileObject $file
+     *
      * @return static
      */
     public function createFromFileObject(\SplFileObject $file)
@@ -291,4 +347,3 @@ class Reader
         throw new \InvalidArgumentException('Expected data must either be a string or stringable');
     }
 }
-

@@ -19,19 +19,20 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         if ($data) {
             foreach (array_keys($data) as $key) {
-                $method = 'get' . ucfirst($key);
+                $method = 'get'.ucfirst($key);
                 $methods[] = $method;
             }
         }
         $record = $this->getMockBuilder(RecordInterface::class)->setMethods($methods)->getMock();
         if ($data) {
             foreach ($data as $key => $value) {
-                $method = 'get' . ucfirst($key);
+                $method = 'get'.ucfirst($key);
                 $record->expects($this->once())
                     ->method($method)
                     ->willReturn($value);
             }
         }
+
         return $record;
     }
 }

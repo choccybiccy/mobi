@@ -24,6 +24,7 @@ class PalmRecord implements RecordInterface
 
     /**
      * PalmRecord constructor.
+     *
      * @param int $offset
      * @param int $attributes
      * @param int $id

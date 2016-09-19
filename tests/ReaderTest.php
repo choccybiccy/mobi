@@ -8,7 +8,7 @@ namespace Choccybiccy\Mobi;
 class ReaderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test construct
+     * Test construct.
      */
     public function testConstruct()
     {
@@ -35,7 +35,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
      */
     protected function getMobiPath()
     {
-        return realpath(__DIR__ . '/../resources/sherlock.mobi');
+        return realpath(__DIR__.'/../resources/sherlock.mobi');
     }
 
     /**
@@ -54,7 +54,7 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @param object $object
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      */
@@ -83,4 +83,3 @@ class ReaderTest extends \PHPUnit_Framework_TestCase
             ->getMock();
     }
 }
-
