@@ -99,7 +99,55 @@ class Reader
         try {
             return $this->exthHeader->getRecordByType(ExthHeader::TYPE_AUTHOR);
         } catch (\Exception $e) {
-            return '(unknown)';
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getPublisher()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_PUBLISHER);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getIsbn()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_ISBN);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getContributor()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_CONTRIBUTOR);
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getAsin()
+    {
+        try {
+            return $this->exthHeader->getRecordByType(ExthHeader::TYPE_ASIN);
+        } catch (\Exception $e) {
+            return null;
         }
     }
 
