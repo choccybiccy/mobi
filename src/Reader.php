@@ -64,11 +64,16 @@ class Reader
      * Reader constructor.
      *
      * @param string|\SplFileObject $file
+     *
+     * @throws \InvalidArgumentException
      */
     public function __construct($file)
     {
         if (is_string($file)) {
             $file = new \SplFileObject($file, 'rb');
+        }
+        if (!($file instanceof \SplFileObject)) {
+            throw new \InvalidArgumentException('File should either be a string or instance of \SplFileObject');
         }
         $this->file = $file;
         $this->parse();
